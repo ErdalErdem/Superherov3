@@ -1,7 +1,10 @@
 package services;
 
+import model.Superhero;
 import org.springframework.stereotype.Service;
 import respositories.SuperheroRepository;
+
+import java.util.List;
 
 @Service
 public class SuperheroService {
@@ -25,5 +28,7 @@ public class SuperheroService {
 
     }
 
-
+    public List<Superhero> getSuperHero() {
+        return repo.getHeroDatabase();
+    }
 }
