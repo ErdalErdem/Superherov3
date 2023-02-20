@@ -1,8 +1,8 @@
-package services;
+package com.example.superherov3.services;
 
-import model.Superhero;
+import com.example.superherov3.model.Superhero;
 import org.springframework.stereotype.Service;
-import respositories.SuperheroRepository;
+import com.example.superherov3.respositories.SuperheroRepository;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ public class SuperheroService {
         repo.addSuperheroes(name, isHuman, superPower, creationYear, strength);
     }
 
-    public void readSuperhero(String name){
-        repo.findSuperhero(name);
+    public Superhero findSuperhero(String name){
+        return repo.findSuperhero(name);
     }
 
     public void updateSuperhero(String name, boolean isHuman, String superPower, int creationYear, double strength) {
@@ -28,7 +28,7 @@ public class SuperheroService {
 
     }
 
-    public List<Superhero> getSuperHero() {
+    public List<Superhero> getSuperHeroes() {
         return repo.getHeroDatabase();
     }
 }

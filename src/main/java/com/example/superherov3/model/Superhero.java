@@ -1,4 +1,4 @@
-package model;
+package com.example.superherov3.model;
 
 public class Superhero {
 
@@ -8,7 +8,8 @@ public class Superhero {
         private int creationYear;
         private double strength;
 
-        public Superhero(String name, boolean isHuman, String superPower, int creationYear, double strength) {
+
+    public Superhero(String name, boolean isHuman, String superPower, int creationYear, double strength) {
             this.name = name;
             this.isHuman = isHuman;
             this.superPower = superPower;
@@ -19,28 +20,32 @@ public class Superhero {
             return name;
         }
 
-        public String setName() {
-            return name;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public boolean getisHuman() {
             return isHuman;
         }
 
+        public void setHuman(boolean human) {
+            isHuman = human;
+        }
+
         public String getSuperPower() {
             return superPower;
         }
 
-        public String setSuperPower() {
-            return superPower;
+        public void setSuperPower(String superPower) {
+            this.superPower = superPower;
         }
 
         public int getCreationYear() {
             return creationYear;
         }
 
-        public int setCreationYear() {
-            return creationYear;
+        public void setCreationYear(int creationYear) {
+            this.creationYear = creationYear;
 
         }
 
@@ -48,8 +53,8 @@ public class Superhero {
             return strength;
         }
 
-        public double setStrength() {
-            return strength;
+        public void setStrength(double strength) {
+            this.strength = strength;
         }
 
         // ToString - Dette printer info om en superhelt
