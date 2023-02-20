@@ -12,28 +12,18 @@ import java.util.*;
 @RequestMapping("superhero")
 public class SuperheroController {
 
-    private SuperheroService superheroService;
+    private final SuperheroService superheroService;
 
     public SuperheroController(SuperheroService superheroService) {
        this.superheroService = superheroService;
     }
 
-    @GetMapping("hello")
-    public ResponseEntity<String> welcome(){
-        return new ResponseEntity<>("Hello!", HttpStatus.OK);
-    }
-
-    @GetMapping("yo")
-    public ResponseEntity<String> welcome2(){
-        return new ResponseEntity<>("Yo World!", HttpStatus.OK);
-    }
-
     //If path is empty, client simply displays all superheroes in the database
-    // http://localhost:8181/superhero
-    @GetMapping(path = "")
+    // http://localhost:8181/superhero/
+    @GetMapping(path = "/")
     public ResponseEntity<List<Superhero>> readSuperheroes(){
-        List superheroList = superheroService.getSuperHeroes();
-        return new ResponseEntity<List<Superhero>>(superheroList, HttpStatus.OK);
+        List<Superhero> superheroList = superheroService.getSuperHeroes();
+        return new ResponseEntity<>(superheroList, HttpStatus.OK);
     }
 
     //Search superhero
@@ -52,6 +42,7 @@ public class SuperheroController {
     }
 
     //Update/edit superhero
+    //Updating superhero name doesn't work because updateSuperhero searches object by name
     //Example: http://localhost:8181/superhero/update/ole/true/fisker/1950/1000000
     @GetMapping(path ="update/{name}/{isHuman}/{superPower}/{creationYear}/{strength}")
     public ResponseEntity<Superhero> updateSuperhero(@PathVariable String name, @PathVariable boolean isHuman, @PathVariable String superPower, @PathVariable int creationYear, @PathVariable double strength) {
@@ -65,6 +56,29 @@ public class SuperheroController {
     public ResponseEntity<String> deleteSuperhero(@PathVariable String name){
         superheroService.deleteSuperhero(name);
         return new ResponseEntity<>(name + " deleted!", HttpStatus.OK);
+    }
+
+    //URL: http://localhost:8181/superhero/format=html
+    @GetMapping(path = "/format=html")
+    public ResponseEntity<?> formatOutput(){
+        StringBuilder sb = new StringBuilder();
+        if (!superheroService.getSuperHeroes().isEmpty()){
+            sb.append("<html>");
+            sb.append("<head>").append("<meta charset=\"UTF-8\">").append("<title>Superhero v.3</title>").append("</head>");
+            sb.append("<body>");
+            sb.append("<h1>Welcome to the superhero database</h1>");
+            sb.append("<table>");
+            for (int i = 0; i < superheroService.getSuperHeroes().size(); i++){
+                Superhero s = superheroService.getSuperHeroes().get(i);
+                int position = i + 1;
+                sb.append("<tr>");
+                sb.append("<th>").append("Super hero: " + position).append("</th>");
+                sb.append("<td>").append(s).append("</td>");
+                sb.append("</tr>");
+            }
+            sb.append("</table>").append("</body>").append("</html>");
+        }
+        return new ResponseEntity<>( sb.toString(), HttpStatus.OK);
     }
 
 }
